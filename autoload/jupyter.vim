@@ -18,12 +18,15 @@ elseif has('python')
     command! -range -nargs=+ Pythonx <line1>,<line2>python <args>
 endif
 
+" This needs to be called outside of a function
+let s:script_folder_path = expand('<sfile>:p:h')
+
 " See ~/.vim/bundle/jedi-vim/autoload/jedi.vim for initialization routine
 function! s:init_python() abort 
     let s:init_outcome = 0
     let init_lines = [
           \ 'import sys; import os; import vim',
-          \ 'vim_path, _ = os.path.split(vim.eval("expand(''<sfile>:p:h'')"))',
+          \ 'vim_path, _ = os.path.split(vim.eval(''s:script_folder_path''))',
           \ 'vim_pythonx_path = os.path.join(vim_path, "pythonx")',
           \ 'if vim_pythonx_path not in sys.path:',
           \ '    sys.path.append(vim_pythonx_path)',
